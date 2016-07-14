@@ -1,5 +1,7 @@
 # Github Publisher
 
+> Quickly deploy your static site to {username}.github.io
+
 ![](demo.gif)
 
 
