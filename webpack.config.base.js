@@ -1,4 +1,5 @@
-import path from 'path';
+import path from 'path'
+import webpack from 'webpack'
 
 export default {
   module: {
@@ -21,10 +22,13 @@ export default {
     packageMains: ['webpack', 'browser', 'web', 'browserify', ['jam', 'main'], 'main']
   },
   plugins: [
-
+    new webpack.DefinePlugin({
+      'process.env.GH_CLIENT_ID': JSON.stringify(process.env.GH_CLIENT_ID),
+      'process.env.GH_CLIENT_SECRET': JSON.stringify(process.env.GH_CLIENT_SECRET)
+    })
   ],
   externals: [
     // put your node 3rd party libraries which can't be built with webpack here
     // (mysql, mongodb, and so on..)
   ]
-};
+}

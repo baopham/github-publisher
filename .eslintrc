@@ -1,18 +1,23 @@
 {
-  "parser": "babel-eslint",
-  "extends": "airbnb",
+  "parser"  : "babel-eslint",
+  "extends" : [
+    "standard",
+    "standard-react"
+  ],
   "env": {
     "browser": true,
     "mocha": true,
     "node": true
   },
+  "globals" : {
+    "expect" : false,
+    "should" : false,
+    "sinon"  : false
+  },
   "rules": {
-    "consistent-return": 0,
-    "comma-dangle": 0,
-    "no-use-before-define": 0,
-    "import/no-unresolved": [2, { ignore: ['electron'] }],
-    "react/jsx-no-bind": 0,
-    "react/prefer-stateless-function": 0
+    "space-before-function-paren": [2, "always"],
+    "semi": [2, "never"],
+    "max-len": [2, 120, 2]
   },
   "plugins": [
     "import",
@@ -22,3 +27,4 @@
     "import/resolver": "webpack"
   }
 }
+

@@ -1,18 +1,42 @@
-import React from 'react';
-import { render } from 'react-dom';
-import { Provider } from 'react-redux';
-import { Router, hashHistory } from 'react-router';
-import { syncHistoryWithStore } from 'react-router-redux';
-import routes from './routes';
-import configureStore from './store/configureStore';
-import './app.global.css';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { hashHistory } from 'react-router'
+import AppContainer from './containers/AppContainer'
+import { syncHistoryWithStore } from 'react-router-redux'
+import configureStore from './store/configureStore'
+import { load as loadStorage } from './store/storage'
+import './app.global.css'
 
-const store = configureStore();
-const history = syncHistoryWithStore(hashHistory, store);
+require('react-tap-event-plugin')()
 
-render(
-  <Provider store={store}>
-    <Router history={history} routes={routes} />
-  </Provider>,
-  document.getElementById('root')
-);
+// ------------------------------------
+// Store
+// ------------------------------------
+
+const store = configureStore()
+const history = syncHistoryWithStore(hashHistory, store)
+
+loadStorage(store)
+  .catch(() => console.error('cannot load previous state'))
+
+// ------------------------------------
+// Render
+// ------------------------------------
+
+const MOUNT_NODE = document.getElementById('root')
+
+let render = (routerKey = null) => {
+  const routes = require('./routes/index')
+
+  ReactDOM.render(
+    <AppContainer
+      store={store}
+      history={history}
+      routes={routes}
+      routerKey={routerKey}
+    />,
+    MOUNT_NODE
+  )
+}
+
+render()
